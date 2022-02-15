@@ -1,0 +1,131 @@
+<html>
+<style>html,body{margin:0;}</style>
+<body></body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var width = 1000;
+var height = 1000;
+var formattedXml
+var doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+	 
+	// var background = doc.createElement('rect');
+	// background.setAttribute('width',width);
+	// background.setAttribute('height',height);
+	// background.setAttribute('style','fill:#000000');
+	// svgElem.appendChild(background);
+
+	// g1 for line style
+	var g1 = doc.createElement('g');
+	g1.setAttribute('style','stroke:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');stroke-width:0.3;stroke-opacity:0.90;');
+	var g2 = doc.createElement('g');
+	g2.setAttribute('style','stroke:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');stroke-width:0.3;stroke-opacity:0.90;');
+	var g3 = doc.createElement('g');
+	g3.setAttribute('style','stroke:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');stroke-width:0.3;stroke-opacity:0.90;');
+	var g4 = doc.createElement('g');
+	g4.setAttribute('style','stroke:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');stroke-width:0.3;stroke-opacity:0.90;');
+	var g5 = doc.createElement('g');
+	g5.setAttribute('style','stroke:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');stroke-width:0.3;stroke-opacity:0.90;');
+	var g6 = doc.createElement('g');
+	g6.setAttribute('style','stroke:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');stroke-width:0.3;stroke-opacity:0.90;');
+	var g7 = doc.createElement('g');
+	g7.setAttribute('style','stroke:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');stroke-width:0.3;stroke-opacity:0.90;');
+	var g8 = doc.createElement('g');
+	g8.setAttribute('style','stroke:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');stroke-width:0.3;stroke-opacity:0.90;');
+	for (var i=0; i<width; i+=7){
+		var line = doc.createElement('line');
+		line.setAttribute('x1',i);
+		line.setAttribute('y1',0);
+		line.setAttribute('x2',width-i);
+		line.setAttribute('y2',i);
+		g1.appendChild(line);
+		var line2 = doc.createElement('line');
+		line2.setAttribute('x1',0);
+		line2.setAttribute('y1',i);
+		line2.setAttribute('x2',i);
+		line2.setAttribute('y2',width-i);
+		g2.appendChild(line2);
+		var line3 = doc.createElement('line');
+		line3.setAttribute('x1',i);
+		line3.setAttribute('y1',i);
+		line3.setAttribute('x2',width-i);
+		line3.setAttribute('y2',0);
+		g3.appendChild(line3);
+		var line4 = doc.createElement('line');
+		line4.setAttribute('x1',i);
+		line4.setAttribute('y1',i);
+		line4.setAttribute('x2',0);
+		line4.setAttribute('y2',width-i);
+		g4.appendChild(line4);
+	}
+	for (var i=0; i<width; i+=7){
+		var line5 = doc.createElement('line');
+		line5.setAttribute('x1',width-i);
+		line5.setAttribute('y1',width-i);
+		line5.setAttribute('x2',i);
+		line5.setAttribute('y2',width);
+		g5.appendChild(line5);
+		var line6 = doc.createElement('line');
+		line6.setAttribute('x1',width-i);
+		line6.setAttribute('y1',width-i);
+		line6.setAttribute('x2',width);
+		line6.setAttribute('y2',i);
+		g6.appendChild(line6);
+		var line7 = doc.createElement('line');
+		line7.setAttribute('x1',i);
+		line7.setAttribute('y1',width-i);
+		line7.setAttribute('x2',width-i);
+		line7.setAttribute('y2',width);
+		g7.appendChild(line7);
+		var line8 = doc.createElement('line');
+		line8.setAttribute('x1',width-i);
+		line8.setAttribute('y1',i);
+		line8.setAttribute('x2',width);
+		line8.setAttribute('y2',width-i);
+		g8.appendChild(line8);
+	}
+	
+	// g2 for circle style
+	// var g2 = doc.createElement('g');
+	// g2.setAttribute('style','stroke:#000000;stroke-width:1.0;fill:#ff0000;fill-opacity:0.5;');
+	// var circle = doc.createElement('circle');
+	// circle.setAttribute('cx', 0);
+	// circle.setAttribute('cy', 0);
+	// circle.setAttribute('r', 0);
+	// g2.appendChild(circle);
+
+	svgElem.appendChild(g1);
+	svgElem.appendChild(g2);
+	svgElem.appendChild(g3);
+	svgElem.appendChild(g4);
+	svgElem.appendChild(g5);
+	svgElem.appendChild(g6);
+	svgElem.appendChild(g7);
+	svgElem.appendChild(g8);
+	doc.appendChild(svgElem);
+ 	later();
+} 
+
+function xmlWriter(){
+	var heading = '<?xml version="1.0" encoding="UTF-8"?>'
+	var s = new XMLSerializer();
+	var str = heading + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+};
+</script>
+</html>

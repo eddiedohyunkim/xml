@@ -1,0 +1,74 @@
+<html>
+<style>
+	html,body{margin:0px; padding:0px;}
+</style>
+<body>
+<body>
+</body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var formattedXml;
+const doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	width = window.innerWidth;
+	height = window.innerHeight;
+  	halfW = (width/2);
+  	halfH = (height/2);
+
+  	var radius;
+  	width<height ? radius = width/2 : radius = height/2;
+
+  	var yin = doc.createElement('circle');
+  	yin.setAttribute('id', 'yin')
+  	yin.setAttribute('cx',halfW);
+  	yin.setAttribute('cy',halfH);
+  	yin.setAttribute('r', radius);
+  	yin.setAttribute('stroke-width', 2);
+  	yin.setAttribute('stroke', '#000000');
+  	yin.setAttribute('fill', '#000000');
+  	svgElem.appendChild(yin);
+
+  	var yang = doc.createElement('path');
+  	width<height ? yang.setAttribute('d', 'M'+halfW+','+((height/2)-radius)+' a1,1 0 0,0 0,'+width) : yang.setAttribute('d', 'M'+halfW+',0 a1,1 0 0,0 0,'+height);
+  	yang.setAttribute('fill', '#ffffff');
+  	svgElem.appendChild(yang);
+	
+	doc.appendChild(svgElem);
+	console.log(yang);
+ 	later();
+} 
+
+function xmlWriter(){
+	var heading = '<?xml version="1.0" encoding="UTF-8"?>'
+	var s = new XMLSerializer();
+	var str = heading + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+
+	document.querySelector('svg').setAttribute('style', 'width:100%; height:100%;');
+	window.onresize = function(){
+		var halfW = (window.innerWidth/2);
+  		var halfH = (window.innerHeight/2);
+  		document.getElementById('yin').setAttribute('style', 'cx:'+halfW+'; cy:'+halfH+';')
+  		
+  		var radius;
+  		window.innerWidth<window.innerHeight ? radius = window.innerWidth/2 : radius = window.innerHeight/2;
+  		document.querySelector('circle').style.r = radius;
+  		window.innerWidth<window.innerHeight ? document.querySelector('path').setAttribute('d', 'M'+halfW+','+((window.innerHeight/2)-radius)+' a1,1 0 0,0 0,'+window.innerWidth) : document.querySelector('path').setAttribute('d', 'M'+halfW+',0 a1,1 0 0,0 0,'+window.innerHeight);
+	}
+	
+};
+</script>
+</html>

@@ -1,0 +1,181 @@
+<html>
+<style>html,body{margin:0; background-color: #fff}</style>
+<body></body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var width = window.innerWidth;
+var height = window.innerHeight ;
+var formattedXml;
+var lines, bckdom;
+var a = true;
+var doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+
+	var background = doc.createElement('rect');
+	background.setAttribute('id','bg')
+	background.setAttribute('width',width);
+	background.setAttribute('height',height);
+	background.setAttribute('style','fill:#000000');
+	svgElem.appendChild(background);
+	var gap = 30;
+	var mx = width/10;
+	var my = 260;
+	var g1 = doc.createElement('g');
+	g1.setAttribute('style','stroke:#00ff00;stroke-width:2.3;');
+	g1.setAttribute('stroke-linecap',"round");
+	
+	for (var i=0; i<2; i+=1){
+		var color = ['#dddddd','#00ff00']
+		for (var i=0; i<=300; i+=12){
+	
+			var e1 = doc.createElement('line');
+			e1.setAttribute('x1',mx+900+i+gap*3);
+			e1.setAttribute('y1',my+0);
+			e1.setAttribute('x2',mx+900+gap*3);
+			e1.setAttribute('y2',my+600/2-i);
+			g1.appendChild(e1);
+			var e2 = doc.createElement('line');
+			e2.setAttribute('x1',mx+900+gap*3);
+			e2.setAttribute('y1',my+i);
+			e2.setAttribute('x2',mx+900+i+gap*3);
+			e2.setAttribute('y2',my+600/2);
+			g1.appendChild(e2);
+			var e3 = doc.createElement('line');
+			e3.setAttribute('x1',mx+900+i+gap*3);
+			e3.setAttribute('y1',my+600/2);
+			e3.setAttribute('x2',mx+900+gap*3);
+			e3.setAttribute('y2',my+600-i);
+			g1.appendChild(e3);
+			var e4 = doc.createElement('line');
+			e4.setAttribute('x1',mx+900+gap*3);
+			e4.setAttribute('y1',my+600/2+i);
+			e4.setAttribute('x2',mx+900+i+gap*3);
+			e4.setAttribute('y2',my+600);
+			g1.appendChild(e4);
+	
+			var a1 = doc.createElement('line');
+			a1.setAttribute('x1',mx+600+gap);
+			a1.setAttribute('y1',my+i);
+			a1.setAttribute('x2',mx+600-i+gap);
+			a1.setAttribute('y2',my+600/2);
+			g1.appendChild(a1);
+			var a2 = doc.createElement('line');
+			a2.setAttribute('x1',mx+300+i+gap);
+			a2.setAttribute('y1',my+0);
+			a2.setAttribute('x2',mx+300+gap);
+			a2.setAttribute('y2',my+600/2-i);
+			g1.appendChild(a2);
+			var a3 = doc.createElement('line');
+			a3.setAttribute('x1',mx+300+i+gap);
+			a3.setAttribute('y1',my+600/2);
+			a3.setAttribute('x2',mx+300+gap);
+			a3.setAttribute('y2',my+600-i);
+			g1.appendChild(a3);
+			var a4 = doc.createElement('line');
+			a4.setAttribute('x1',mx+300+i+gap);
+			a4.setAttribute('y1',my+600/2);
+			a4.setAttribute('x2',mx+600+gap);
+			a4.setAttribute('y2',my+600/2+i);
+			g1.appendChild(a4);
+	
+			var w1 = doc.createElement('line');
+			w1.setAttribute('x1',mx+0);
+			w1.setAttribute('y1',my+i*2);
+			w1.setAttribute('x2',mx+i/2);
+			w1.setAttribute('y2',my+600);
+			g1.appendChild(w1);
+			var w2 = doc.createElement('line');
+			w2.setAttribute('x1',mx+300);
+			w2.setAttribute('y1',my+i*2);
+			w2.setAttribute('x2',mx+300-i/2);
+			w2.setAttribute('y2',my+600);
+			g1.appendChild(w2);
+			var w3 = doc.createElement('line');
+			w3.setAttribute('x1',mx+i/2);
+			w3.setAttribute('y1',my+600);
+			w3.setAttribute('x2',mx+150);
+			w3.setAttribute('y2',my+600-i);
+			g1.appendChild(w3);
+			var w4 = doc.createElement('line');
+			w4.setAttribute('x1',mx+150+i/2);
+			w4.setAttribute('y1',my+600);
+			w4.setAttribute('x2',mx+150);
+			w4.setAttribute('y2',my+300+i);
+			g1.appendChild(w4);
+	
+			var v1 = doc.createElement('line');
+			v1.setAttribute('x1',mx+600+gap*2);
+			v1.setAttribute('y1',my+i*2);
+			v1.setAttribute('x2',mx+600+i+gap*2);
+			v1.setAttribute('y2',my+600);
+			g1.appendChild(v1);
+			var v2 = doc.createElement('line');
+			v2.setAttribute('x1',mx+900+gap*2);
+			v2.setAttribute('y1',my+i*2);
+			v2.setAttribute('x2',mx+900-i+gap*2);
+			v2.setAttribute('y2',my+600);
+			g1.appendChild(v2);
+	
+		}	
+
+	}
+	svgElem.appendChild(g1);
+	doc.appendChild(svgElem);
+ 	later();
+}
+
+lines = document.getElementsByTagName('line');
+bckdom = document.getElementById('bg');
+document.body.onmousemove = function(e) {
+	var xpos = e.clientX;
+	var ypos = e.clientY;
+	var r1 = 8;
+	var r2 = 2;
+	var r3 = 10;	
+	for(var i=0; i<=lines.length/2; i+=1){
+		lines[i].style.stroke='#dddddd';
+		lines[i].setAttribute('stroke-dasharray',''+xpos/r1+','+ypos/r1+','+xpos/r2+','+ypos/r2+','+xpos/r3+','+ypos/r3);
+	}
+	for(var j=lines.length/2; j<=lines.length; j+=1){
+		lines[j].style.stroke='#00ff00';
+		lines[j].setAttribute('stroke-dasharray',''+xpos/r3+','+ypos/r3+','+xpos/r2+','+ypos/r2+','+xpos/r1+','+ypos/r1);
+	}
+}
+
+document.body.onclick = function() {
+	if(a == true){
+ 		a = false;
+ 		bckdom.style.fill = '#ffffff';
+ 		for(var i=0; i<=lines.length/2; i+=1){
+			lines[i].style.stroke='#000000';
+		}
+ 	}else{
+		a = true;
+		bckdom.style.fill = '#000000';
+		for(var i=0; i<=lines.length/2; i+=1){
+			lines[i].style.stroke='#00ff00';
+		}
+	}
+}
+
+function xmlWriter(){
+	var s = new XMLSerializer();
+	var str = '<?xml version="1.0" encoding="UTF-8"?>' + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	// console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+};
+</script>
+</html>

@@ -1,0 +1,54 @@
+<html>
+<style>html,body{margin:0;}</style>
+<body><button onclick='animate()'>animate!</button></body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var width = 500;
+var height = 500;
+var formattedXml
+var doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+
+function create(later) {
+	const svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+	// g1 for line style
+
+	var g1 = doc.createElement('g');
+	g1.setAttribute('style','fill:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');stroke:#000000;stroke-width:0.1;');
+	for (var i=0; i<width/2; i+=1){
+		var el = doc.createElement('ellipse');
+		el.setAttribute('cx',width/2);
+		el.setAttribute('cy',height/2-i);
+		el.setAttribute('rx',width/2-i);
+		el.setAttribute('ry',height/2-i);
+		el.setAttribute('style','fill:rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+');');
+		g1.appendChild(el);
+	}
+
+	svgElem.appendChild(g1);
+	doc.appendChild(svgElem);
+ 	later();
+
+} 
+
+function xmlWriter(){
+	var heading = '<?xml version="1.0" encoding="UTF-8"?>'
+	var s = new XMLSerializer();
+	var str = heading + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+
+};
+</script>
+</html>

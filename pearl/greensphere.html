@@ -1,0 +1,101 @@
+<html>
+<style>html,body{margin:0; overflow:hidden; position:fixed;}</style>
+<body></body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var formattedXml;
+var width = window.innerWidth;
+var height = window.innerHeight ;
+var doc = document.implementation.createDocument(', ', null);
+var color;
+var rx;
+var ry;
+create(function(){xmlWriter();});
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+	svgElem.setAttribute('style', 'background-color :transparent;');
+	
+	if(width<height){
+		rx = width/2.2;
+		ry = rx
+	}else{
+		rx = height/2.2;
+		ry = rx;
+	}
+		color = ['#ffffff','#00ff00','#000000']
+		var r = [0,50,120]
+		var ofs = [0,0,0]
+		for(var i=0; i<color.length;i+=1){
+			var g = doc.createElement('radialGradient');
+			g.setAttribute('id','grad'+i);
+			g.setAttribute('r',r[i]+'%');
+			var s1 = doc.createElement('stop');
+			s1.setAttribute('offset',ofs[i]+'%');
+			s1.setAttribute('style','stop-color:'+color[i]+';stop-opacity:0;');
+			g.appendChild(s1);
+			var s2 = doc.createElement('stop');
+			s2.setAttribute('offset',100+'%');
+			s2.setAttribute('style','stop-color:'+color[i]+';stop-opacity:1;');
+			g.appendChild(s2);
+			svgElem.appendChild(g);
+			var c = doc.createElement('ellipse');
+			c.setAttribute('cx', width/2);
+			c.setAttribute('cy', height/2);
+			c.setAttribute('rx', rx);
+			c.setAttribute('ry', ry);
+			c.setAttribute('fill','url(#grad'+i+')');
+			c.setAttribute('id','circle'+i);
+			svgElem.appendChild(c);
+		}
+	
+	doc.appendChild(svgElem);
+ 	later();
+}
+
+document.body.onmousemove = function(e) {
+	var xpos = e.clientX;
+	var ypos = e.clientY;
+	console.log(xpos,ypos);
+	for(var i=0;i<color.length;i+=1){
+		var gdom = document.getElementById('grad'+i);
+		gdom.setAttribute('cx',xpos/(width/100)+'%'); 
+		gdom.setAttribute('cy',ypos/(height/100)+'%');
+		gdom.setAttribute('fx',xpos/(width/100)+'%'); 
+		gdom.setAttribute('fy',ypos/(height/100)+'%');
+	}
+}
+
+function handleOrientation(event) {
+  	var x = event.gamma;
+  	var y = event.beta;
+
+  	for(var i=0;i<color.length;i+=1){
+		var gdom = document.getElementById('grad'+i);
+		gdom.setAttribute('cx',100-(x/8*(width/100)+50)+'%'); 
+		gdom.setAttribute('cy',100-(y/8*(height/100)+50)+'%');
+		gdom.setAttribute('fx',100-(x/8*(width/100)+50)+'%'); 
+		gdom.setAttribute('fy',100-(y/8*(height/100)+50)+'%');
+	}
+}
+
+window.addEventListener('deviceorientation', handleOrientation);
+// fjskdnfjksdnfkjsfnkjd
+function xmlWriter(){
+	var s = new XMLSerializer();
+	var str = '<?xml version="1.0" encoding="UTF-8"?>' + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+};
+</script>
+</html>

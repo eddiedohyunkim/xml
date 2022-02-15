@@ -1,0 +1,124 @@
+<html>
+<style>html,body{margin:0px; background-color: #000000;}</style>
+<!-- <body onmousemove="grow(event)"> -->
+	<body>
+	<!-- <svg height="500" width="500">
+    <radialGradient id="grad1" cx="50%" cy="50%" r="57%" fx="10%" fy="10%">
+      <stop offset="0%" style="stop-color:rgb(255,255,255);stop-opacity:0" />
+      <stop offset="100%" style="stop-color:rgb(210,230,250);stop-opacity:1" />
+    </radialGradient>
+  <ellipse cx="250" cy="250" rx=85 ry="86" fill="url(#grad1)" />
+  <ellipse cx="200" cy="200" rx="40" ry="100" fill="url(#grad1)" />
+  Sorry, your browser does not support inline SVG.
+</svg> -->
+</body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var width = window.innerWidth;
+var height = window.innerHeight;
+var formattedXml;
+var xpos,ypos;
+var a = true;
+var doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+
+	var background = doc.createElement('rect');
+	background.setAttribute('width',width);
+	background.setAttribute('height',height);
+	background.setAttribute('style','fill:#000000');
+	svgElem.appendChild(background);
+	var rg = doc.createElement('radialGradient');
+	rg.setAttribute('id','grad1');
+	rg.setAttribute('cx','50%');
+	rg.setAttribute('cy','50%');
+	rg.setAttribute('r','60%');
+	rg.setAttribute('fx','10%');
+	rg.setAttribute('fy','10%');
+
+	var stop1 = doc.createElement('stop')
+		stop1.setAttribute('offset','0%');
+		stop1.setAttribute('style','stop-color:rgb(255,255,255);');
+		// stop1.setAttribute('stop-opacity',1);
+
+	var stop2 = doc.createElement('stop')
+		stop2.setAttribute('offset','100%');
+		stop2.setAttribute('style','stop-color:rgb(128, 187, 255);');
+		// stop2.setAttribute('stop-opacity',1);
+
+	svgElem.appendChild(rg);
+	rg.appendChild(stop1);
+	rg.appendChild(stop2);
+
+	for (var i=0; i<=6; i+=1){
+
+	var cloud = doc.createElement('ellipse');
+		cloud.setAttribute('cx',Math.floor(Math.random()*300)+width/2-150);
+		cloud.setAttribute('cy',Math.floor(Math.random()*200)+height/2-100);
+		cloud.setAttribute('rx',Math.floor(Math.random()*200)+30);
+		cloud.setAttribute('ry',Math.floor(Math.random()*80)+20);
+		cloud.setAttribute('fill',"url(#grad1)");
+		svgElem.appendChild(cloud);
+	}
+
+
+	
+	doc.appendChild(svgElem);
+ 	later();
+} 
+
+var clouds;
+function grow(e) {
+	xpos = e.clientX;
+	ypos = e.clientY;
+	clouds = document.getElementsByTagName('ellipse');
+	vari = xpos/window.innerWidth;
+
+	for(var i=0; i<=clouds.length; i+=1){
+		var r = Math.floor(Math.random()*255);
+		clouds[i].setAttribute('rx',100+xpos/1000);
+		clouds[i].setAttribute('ry',40+ypos/10);
+	}
+}
+
+// document.body.onclick = function() {
+// 	if(a == true){
+//  		a = false;
+//  		document.documentElement.style.backgroundColor = '#00ff00';
+// 		document.body.style.backgroundColor = '#00ff00';
+// 		document.getElementById('info').style.color = '#000000';
+// 		for(var i=3; i<=lines.length; i+=1){
+// 			lines[i].setAttribute('style','stroke:#ffffff;stroke-width:;');
+// 		}
+//  	}else{
+// 		a =true;
+// 		document.documentElement.style.backgroundColor = '#000000';
+// 		document.body.style.backgroundColor = '#000000';
+// 		document.getElementById('info').style.color = '#ffffff';
+// 		for(var i=3; i<=lines.length; i+=1){
+// 			lines[i].setAttribute('style','fill:rgb(255,255,255); stroke:black; stroke-width:0.2;');
+// 		}
+// 	}
+// }
+
+function xmlWriter(){
+	var heading = '<?xml version="1.0" encoding="UTF-8"?>'
+	var s = new XMLSerializer();
+	var str = heading + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+};
+</script>
+</html>

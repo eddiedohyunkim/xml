@@ -1,0 +1,73 @@
+<html>
+<style>html,body{margin:0;}</style>
+<body></body>
+<script type='text/javascript' src='../js/xml-formatter.js'></script>
+<script>
+var width = 500;
+var height = 500;
+var formattedXml
+var doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+
+	var background = doc.createElement('rect');
+	background.setAttribute('width',width);
+	background.setAttribute('height',height);
+	background.setAttribute('style','fill:#000000');
+	svgElem.appendChild(background);
+	// g1 for line style
+	var g1 = doc.createElement('g');
+	g1.setAttribute('style','stroke:#ffffff;stroke-width:3.5;');
+	for (var i=0; i<=width; i+=20){
+		var line = doc.createElement('line');
+		line.setAttribute('x1',0);
+		line.setAttribute('y1',i/2);
+		line.setAttribute('x2',i);
+		line.setAttribute('y2',height/2);
+		g1.appendChild(line);
+		var line2 = doc.createElement('line');
+		line2.setAttribute('x1',i);
+		line2.setAttribute('y1',0);
+		line2.setAttribute('x2',0);
+		line2.setAttribute('y2',height-i);
+		g1.appendChild(line2);
+		var line3 = doc.createElement('line');
+		line3.setAttribute('x1',i);
+		line3.setAttribute('y1',height/2);
+		line3.setAttribute('x2',0);
+		line3.setAttribute('y2',height-i/2);
+		g1.appendChild(line3);
+		var line4 = doc.createElement('line');
+		line4.setAttribute('x1',i);
+		line4.setAttribute('y1',height);
+		line4.setAttribute('x2',0);
+		line4.setAttribute('y2',i);
+		g1.appendChild(line4);
+	}
+	svgElem.appendChild(g1);
+	doc.appendChild(svgElem);
+ 	later();
+} 
+
+function xmlWriter(){
+	var heading = '<?xml version="1.0" encoding="UTF-8"?>'
+	var s = new XMLSerializer();
+	var str = heading + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+};
+</script>
+</html>

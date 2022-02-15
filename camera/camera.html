@@ -1,0 +1,48 @@
+<html>
+<title></title>
+<style>
+    html, body{margin:0; overflow:hidden;}
+    /*#flip{font-size: 4vw; position:fixed; z-index: 999;}*/
+    video{
+    	position:fixed; 
+
+   		transform: rotateY(180deg);
+    	-webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    	-moz-transform:rotateY(180deg); /* Firefox */
+	}
+    div{position:fixed;  z-index: 998; width:100px; height:100px; background-color: red; }
+</style>
+<!-- <button type="button" id ='flip'>flip</button> -->
+<div></div>
+<video></video>
+<script>
+var width = window.innerWidth;
+var height = window.innerHeight ;
+var front = false;
+var constraints;
+
+const video = document.querySelector('video');
+video.style.width = width;
+video.setAttribute('autoplay', '');
+video.setAttribute('muted', '');
+video.setAttribute('playsinline', '');
+
+// document.getElementById('flip').onclick = function() { front = !front; turn(); };
+// function turn() {
+// 	constraints = { video: {width: {min: 1280}, height: {min: 720}, facingMode: (front? "user" : "environment") } };
+// 	return navigator.mediaDevices.getUserMedia(constraints).
+//   then((stream) => {video.srcObject = stream});
+// }
+
+// constraints = {
+//     video: {width: {min: 1280}, height: {min: 720}, facingMode: { exact: "environment" }}
+// };
+constraints = {
+    video: {width: {min: 1280}, height: {min: 720}}
+};
+navigator.mediaDevices.getUserMedia(constraints).
+  then((stream) => {video.srcObject = stream});
+
+
+</script>
+</html>

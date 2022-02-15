@@ -1,0 +1,85 @@
+<html>
+<style>html,body{margin:0; background-color: #000}</style>
+<body></body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var formattedXml;
+var a = true;
+var width = window.innerWidth;
+var height = window.innerHeight ;
+var doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+	var rx;
+	var ry;
+	if(width<height){
+		rx = width/1.5;
+		ry = rx
+	}else{
+		rx = height/1.5;
+		ry = rx;
+	}
+	var g = doc.createElement('radialGradient');
+	g.setAttribute('id','grad1');
+	g.setAttribute('cx',50+'%');
+	g.setAttribute('cy',50+'%');
+	g.setAttribute('r',10+'%');
+	g.setAttribute('fx',50+'%');
+	g.setAttribute('fy',50+'%');
+	var s1 = doc.createElement('stop');
+	s1.setAttribute('offset',10+'%');
+	s1.setAttribute('style','stop-color:#00ff00;stop-opacity:1;');
+	g.appendChild(s1);
+	var s2 = doc.createElement('stop');
+	s2.setAttribute('offset',100+'%');
+	s2.setAttribute('style','stop-color:#000000;stop-opacity:1;');
+	g.appendChild(s2);
+	svgElem.appendChild(g);
+
+	var c = doc.createElement('ellipse');
+	c.setAttribute('cx', width/2);
+	c.setAttribute('cy', height/2);
+	c.setAttribute('rx', rx);
+	c.setAttribute('ry', ry);
+	c.setAttribute('fill','url(#grad1)');
+	svgElem.appendChild(c);
+	doc.appendChild(svgElem);
+ 	later();
+
+ 	console.log(height);
+}
+
+document.body.onmousemove = function(e) {
+	var xpos = e.clientX;
+	var ypos = e.clientY;
+	var gdom = document.getElementById('grad1');
+	// gdom.setAttribute('r',xpos/20+'%');
+	gdom.setAttribute('cx',xpos/(width/100)+'%'); //when width 1280, 12.8
+	gdom.setAttribute('cy',ypos/(height/100)+'%');
+	// gdom.setAttribute('fx',xpos/20+'%');
+	// gdom.setAttribute('fy',ypos/16+'%');
+
+}
+
+// window.addEventListener("resize", create);
+
+function xmlWriter(){
+	var s = new XMLSerializer();
+	var str = '<?xml version="1.0" encoding="UTF-8"?>' + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+};
+</script>
+</html>

@@ -1,0 +1,128 @@
+<html>
+<style>html,body{margin:2px; background-color: #000000;}#info{position:fixed; color:#ffffff;} 
+.ex{font-size:8px;}</style>
+<body onmousemove="grow(event)" onmouseout="clearCoor()">
+	<div id='info'>Bifurcation diagram for the logistic map, x<span class='ex'>n+1</span> = rx<span class='ex'>n</span>(1 &minus; x<span class='ex'>n</span>) <b><span id='subinfo'></span></b></div>
+	<div id='container'></div>
+</body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var width = 500;
+var height = 500;
+var doc = document.implementation.createDocument(', ', null);
+var formattedXml;
+var xvals;
+var xpos;
+var ypos;
+var a = true;
+function calc(callback){
+	xvals = [[],[]];
+	// xvals = [];
+	for(var beta=0; beta<=4; beta+=0.01){
+		beta = rn(beta,2)
+		var xold = 0.5;
+		for(var i=0; i<=2000; i+=1){
+			var xnew = (xold-Math.pow(xold,2))*beta;
+			xold = xnew;
+		}
+		var xss = xnew;
+		for(var i=0; i<=100; i+=1){
+			var xnew = (xold-Math.pow(xold,2))*beta;
+			xold = xnew;
+			xvals[0].push(beta);
+			xvals[1].push(xnew);
+			if(Math.abs(xnew-xss)<0.01){break;}
+		}
+	}
+	callback();
+}
+calc(function(){create(function(){xmlWriter()})});
+
+function create(xml) {
+	var svg = doc.createElement('svg');
+	svg.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svg.setAttribute('version','1.0');
+	svg.setAttribute('width',width);
+	svg.setAttribute('height',height);
+	console.log(xvals)
+	
+	for(var i=0; i<=xvals[0].length; i+=1){
+		var circle = doc.createElement('circle');
+		circle.setAttribute('class','circle1');
+		circle.setAttribute('cy',xvals[0][xvals[0].length-i+1]*-1*70+370);
+		circle.setAttribute('cx',xvals[1][xvals[1].length-i+1]*100+224);
+		circle.setAttribute('r',xvals[0][i]*10);
+		circle.setAttribute('style','fill:rgb(255,255,255); stroke:black; stroke-width:0.2;');
+		
+		var circle2 = doc.createElement('circle');
+		circle2.setAttribute('class','circle2');
+		circle2.setAttribute('cy',xvals[0][xvals[0].length-i]*-1*70+370);
+		circle2.setAttribute('cx',xvals[1][xvals[1].length-i]*100*-1+224);
+		circle2.setAttribute('r',xvals[0][i]*10);
+		circle2.setAttribute('style','fill:rgb(255,255,255); stroke:black; stroke-width:0.2;');
+		svg.appendChild(circle);
+		svg.appendChild(circle2);
+		//'+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+'
+	}
+	doc.appendChild(svg);
+	xml();
+}
+
+var circles;
+function grow(e) {
+	xpos = e.clientX;
+	ypos = e.clientY;
+	var weightRate = 8;
+	var coor = 'weight: '+Math.ceil(ypos/weightRate);
+	document.getElementById('subinfo').innerHTML = coor;
+	circles = document.getElementsByTagName('circle');
+
+	for(var i=3; i<=circles.length; i+=1){
+		circles[i].setAttribute('r',ypos/weightRate);
+	}
+}
+
+document.body.onclick = function() {
+	if(a == true){
+ 		a = false;
+ 		document.documentElement.style.backgroundColor = '#00ff00';
+		document.body.style.backgroundColor = '#00ff00';
+		document.getElementById('info').style.color = '#000000';
+		for(var i=3; i<=circles.length; i+=1){
+			circles[i].setAttribute('style','fill:rgb(255,255,255); stroke:black; stroke-width:0.3;');
+		}
+ 	}else{
+		a =true;
+		document.documentElement.style.backgroundColor = '#000000';
+		document.body.style.backgroundColor = '#000000';
+		document.getElementById('info').style.color = '#ffffff';
+		for(var i=3; i<=circles.length; i+=1){
+			circles[i].setAttribute('style','fill:rgb(255,255,255); stroke:black; stroke-width:0.2;');
+		}
+	}
+}
+
+function clearCoor() {
+	document.getElementById('subinfo').innerHTML = '';
+}
+function rn(rnum, rlength) { 
+ 	var newnum = Math.round(rnum * Math.pow(10, rlength)) / Math.pow(10, rlength);
+   	return newnum;
+}
+function xmlWriter(){
+	var heading = '<?xml version="1.0" encoding="UTF-8"?>'
+	var s = new XMLSerializer();
+	var str = heading + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	// console.log(formattedXml);
+	print();
+}
+function print (){
+	var container = document.getElementById('container');
+	container.innerHTML = formattedXml;
+};
+
+</script>
+</body>
+</html>

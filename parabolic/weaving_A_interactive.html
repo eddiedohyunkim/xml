@@ -1,0 +1,197 @@
+<html>
+<style>html,body{margin:0px; padding:0px; background-color: #000; top:0; position:fixed;}</style>
+<body onmousemove="grow(event)">
+<!-- <body> -->
+</body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var width = window.innerWidth;
+var height = window.innerHeight;
+var formattedXml
+var xpos,ypos;
+var doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+	 
+	var background = doc.createElement('rect');
+	background.setAttribute('width',width);
+	background.setAttribute('height',height);
+	background.setAttribute('style','fill:#000');
+	svgElem.appendChild(background);
+	var weight = 0.3;
+	// var mtb = 50;
+	var mtb = height/2-300;
+	// var mlr = 0;
+	var mlr = width/2-300;
+	var lineweight = 15
+	var gcolor = '#ff0000';
+
+
+
+	
+
+	
+	for (var i=0; i<=300; i+=10){
+		var bw = ['#ffffff','#000000']
+		var g = doc.createElement('g');
+		// g.setAttribute('style','stroke:'+bw[Math.floor(Math.random()*2)]);
+		g.setAttribute('style','stroke:'+bw[Math.floor(Math.random()*bw.length)]+';'+'stroke-width:'+Math.floor(Math.random()*lineweight)+';');
+		// g.setAttribute('stroke-dasharray',''+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes));
+		// g.setAttribute('stroke-linecap','round')
+		svgElem.appendChild(g);
+
+		var tl1 = doc.createElement('line');
+		tl1.setAttribute('class','tl1');
+		tl1.setAttribute('x1',mlr+i);
+		tl1.setAttribute('y1',mtb);
+		tl1.setAttribute('x2',mlr);
+		tl1.setAttribute('y2',mtb+300-i);
+		var tl2 = doc.createElement('line');
+		tl2.setAttribute('x1',mlr+i);
+		tl2.setAttribute('y1',mtb);
+		tl2.setAttribute('x2',mlr+300);
+		tl2.setAttribute('y2',mtb+i);
+		var tl3 = doc.createElement('line');
+		tl3.setAttribute('x1',mlr+i);
+		tl3.setAttribute('y1',mtb+300);
+		tl3.setAttribute('x2',mlr);
+		tl3.setAttribute('y2',mtb+i);
+		var tl4 = doc.createElement('line');
+		tl4.setAttribute('x1',mlr+i);
+		tl4.setAttribute('y1',mtb+300);
+		tl4.setAttribute('x2',mlr+300);
+		tl4.setAttribute('y2',mtb+300-i);
+
+		var tr1 = doc.createElement('line');
+		tr1.setAttribute('x1',mlr+300+i);
+		tr1.setAttribute('y1',mtb);
+		tr1.setAttribute('x2',mlr+300);
+		tr1.setAttribute('y2',mtb+300-i);
+		var tr2 = doc.createElement('line');
+		tr2.setAttribute('x1',mlr+600-i);
+		tr2.setAttribute('y1',mtb);
+		tr2.setAttribute('x2',mlr+600);
+		tr2.setAttribute('y2',mtb+300-i);
+
+		var tr3 = doc.createElement('line');
+		tr3.setAttribute('x1',mlr+300);
+		tr3.setAttribute('y1',mtb+i);
+		tr3.setAttribute('x2',mlr+300+i);
+		tr3.setAttribute('y2',mtb+300);
+		var tr4 = doc.createElement('line');
+		tr4.setAttribute('x1',mlr+600-i);
+		tr4.setAttribute('y1',mtb+300);
+		tr4.setAttribute('x2',mlr+600);
+		tr4.setAttribute('y2',mtb+i);
+
+		var bl1 = doc.createElement('line');
+		bl1.setAttribute('x1',mlr+i);
+		bl1.setAttribute('y1',mtb+300);
+		bl1.setAttribute('x2',mlr);
+		bl1.setAttribute('y2',mtb+600-i);
+		var bl2 = doc.createElement('line');
+		bl2.setAttribute('x1',mlr+i);
+		bl2.setAttribute('y1',mtb+300);
+		bl2.setAttribute('x2',mlr+300);
+		bl2.setAttribute('y2',mtb+300+i);
+		var bl3 = doc.createElement('line');
+		bl3.setAttribute('x1',mlr);
+		bl3.setAttribute('y1',mtb+300+i);
+		bl3.setAttribute('x2',mlr+i);
+		bl3.setAttribute('y2',mtb+600);
+		var bl4 = doc.createElement('line');
+		bl4.setAttribute('x1',mlr+i);
+		bl4.setAttribute('y1',mtb+600);
+		bl4.setAttribute('x2',mlr+300);
+		bl4.setAttribute('y2',mtb+600-i);
+		
+		var br1 = doc.createElement('line');
+		br1.setAttribute('x1',mlr+300+i);
+		br1.setAttribute('y1',mtb+300);
+		br1.setAttribute('x2',mlr+300);
+		br1.setAttribute('y2',mtb+600-i);
+		var br2 = doc.createElement('line');
+		br2.setAttribute('x1',mlr+600-i);
+		br2.setAttribute('y1',mtb+300);
+		br2.setAttribute('x2',mlr+600);
+		br2.setAttribute('y2',mtb+600-i);
+		var br3 = doc.createElement('line');
+		br3.setAttribute('x1',mlr+300);
+		br3.setAttribute('y1',mtb+300+i);
+		br3.setAttribute('x2',mlr+300+i);
+		br3.setAttribute('y2',mtb+600);		
+		var br4 = doc.createElement('line');
+		br4.setAttribute('x1',mlr+300+i);
+		br4.setAttribute('y1',mtb+600);
+		br4.setAttribute('x2',mlr+600);
+		br4.setAttribute('y2',mtb+600-i);
+
+		g.appendChild(tl1);
+		// g.appendChild(tl2);
+		g.appendChild(tl3);
+		// g.appendChild(tl4); 
+
+		// g.appendChild(tr1);
+		g.appendChild(tr2);
+		// g.appendChild(tr3);
+		g.appendChild(tr4);
+		
+		g.appendChild(bl1);
+		// g.appendChild(bl2);
+		// g.appendChild(bl3);
+		// g.appendChild(bl4);
+		
+		// g.appendChild(br1);
+		g.appendChild(br2); 
+		// g.appendChild(br3);
+		// g.appendChild(br4);
+	}
+	
+
+	svgElem.appendChild(g);
+	doc.appendChild(svgElem);
+ 	later();
+} 
+
+var lines;
+function grow(e) {
+	xpos = e.clientX/5;
+	ypos = e.clientY/5;
+	lines = document.getElementsByTagName('line');
+	vari = xpos/window.innerWidth;
+
+	for(var i=0; i<=lines.length; i+=1){
+				var bw2 = ['#ffffff','#000000'];
+				var lineweightV = 10;
+
+
+		// var r = Math.floor(Math.random()*255);
+		lines[i].setAttribute('style','stroke:'+bw2[Math.floor(Math.random()*bw2.length)]+';'+'stroke-width:'+Math.floor(Math.random()*lineweightV)+';');
+		// lines[i].setAttribute('style','stroke: linear-gradient(to left, #000000, #ff0000) ;stroke-width:20;');
+		lines[i].setAttribute('stroke-dasharray',''+ypos+','+xpos+','+ypos+','+ypos*8+','+ypos*10);
+	}
+}
+// }
+
+function xmlWriter(){
+	var heading = '<?xml version="1.0" encoding="UTF-8"?>'
+	var s = new XMLSerializer();
+	var str = heading + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+};
+</script>
+</html>

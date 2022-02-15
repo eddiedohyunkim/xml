@@ -1,0 +1,546 @@
+<html>
+<style>html,body{margin:0px; padding:0px; background-color: #000; top:0; position:fixed;}</style>
+<body onmousemove="grow(event)">
+<!-- <body> -->
+</body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var width = window.innerWidth;
+var height = window.innerHeight;
+var formattedXml
+var xpos,ypos;
+var doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+	 
+	var background = doc.createElement('rect');
+	background.setAttribute('width',width);
+	background.setAttribute('height',height);
+	background.setAttribute('style','fill:#000');
+	svgElem.appendChild(background);
+	var weight = 0.3;
+	// var mtb = 50;
+	var mtb = height/2-300;
+	// var mlr = 0;
+	var mlr = width/2-300;
+	var lineweight = 15
+	var gcolor = '#ff0000';
+
+	// var dashes = 5
+	// var g = doc.createElement('g');
+	// g.setAttribute('style','stroke:#ffffff;stroke-width:'+weight+'; ');
+
+	var bgcircle = doc.createElement('circle');
+	bgcircle.setAttribute('cx', width/2);
+	bgcircle.setAttribute('cy', height/2);
+	bgcircle.setAttribute('r', height/3);
+	bgcircle.setAttribute('fill', '#ff0000');
+	// svgElem.appendChild(bgcircle);
+
+	// var tlg = doc.createElement('rect');
+	// tlg.setAttribute('x',mlr);
+	// tlg.setAttribute('y',mtb);
+	// tlg.setAttribute('width',300);
+	// tlg.setAttribute('height',300);
+	// tlg.setAttribute('style', 'stroke:'+gcolor+';stroke-width:2.1;');
+	// tlg.setAttribute('class', 'guidance');
+	// svgElem.appendChild(tlg);
+	// var tlgtxt = doc.createElement('text');
+	// tlgtxt.setAttribute('x',mlr+135);
+	// tlgtxt.setAttribute('y',mtb+165);
+	// tlgtxt.setAttribute('font-size','50px');
+	// tlgtxt.setAttribute('style', 'fill:'+gcolor+';');
+	// tlgtxt.setAttribute('class', 'guidance');
+	// tlgtxt.innerHTML = 'tl';
+	// // svgElem.appendChild(tlgtxt);
+
+	// var tlgline1 = doc.createElement('line');
+	// tlgline1.setAttribute('x1',mlr);
+	// tlgline1.setAttribute('y1',mtb+150);
+	// tlgline1.setAttribute('x2',mlr+150);
+	// tlgline1.setAttribute('y2',mtb);
+	// tlgline1.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// tlgline1.setAttribute('class', 'guidance');
+	
+	// svgElem.appendChild(tlgline1);
+	// var tlgline1txt = doc.createElement('text');
+	// tlgline1txt.setAttribute('x',mlr+30);
+	// tlgline1txt.setAttribute('y',mtb+50);
+	// tlgline1txt.setAttribute('font-size','20px');
+	// tlgline1txt.setAttribute('style', 'fill:'+gcolor+';');
+	// tlgline1txt.innerHTML = 'tl-1';
+	// tlgline1txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(tlgline1txt);
+	// var tlgline2 = doc.createElement('line');
+	// tlgline2.setAttribute('x1',mlr+150);
+	// tlgline2.setAttribute('y1',mtb);
+	// tlgline2.setAttribute('x2',mlr+300);
+	// tlgline2.setAttribute('y2',mtb+150);
+	// tlgline2.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// tlgline2.setAttribute('class', 'guidance');
+	// tlgline2.setAttribute('class', 'guidance');
+	// svgElem.appendChild(tlgline2);
+	// var tlgline2txt = doc.createElement('text');
+	// tlgline2txt.setAttribute('x',mlr+210+30);
+	// tlgline2txt.setAttribute('y',mtb+50);
+	// tlgline2txt.setAttribute('font-size','20px');
+	// tlgline2txt.setAttribute('style', 'fill:'+gcolor+';');
+	// tlgline2txt.innerHTML = 'tl-2';
+	// tlgline2txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(tlgline2txt);
+	// var tlgline3 = doc.createElement('line');
+	// tlgline3.setAttribute('x1',mlr);
+	// tlgline3.setAttribute('y1',mtb+150);
+	// tlgline3.setAttribute('x2',mlr+150);
+	// tlgline3.setAttribute('y2',mtb+300);
+	// tlgline3.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// tlgline3.setAttribute('class', 'guidance');
+	// svgElem.appendChild(tlgline3);
+	// var tlgline3txt = doc.createElement('text');
+	// tlgline3txt.setAttribute('x',mlr+30);
+	// tlgline3txt.setAttribute('y',mtb+220+50);
+	// tlgline3txt.setAttribute('font-size','20px');
+	// tlgline3txt.setAttribute('style', 'fill:'+gcolor+';');
+	// tlgline3txt.innerHTML = 'tl-3';
+	// tlgline3txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(tlgline3txt);
+	// var tlgline4 = doc.createElement('line');
+	// tlgline4.setAttribute('x1',mlr+300);
+	// tlgline4.setAttribute('y1',mtb+150);
+	// tlgline4.setAttribute('x2',mlr+150);
+	// tlgline4.setAttribute('y2',mtb+300);
+	// tlgline4.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// tlgline4.setAttribute('class', 'guidance');
+	// svgElem.appendChild(tlgline4);
+	// var tlgline4txt = doc.createElement('text');
+	// tlgline4txt.setAttribute('x',mlr+210+30);
+	// tlgline4txt.setAttribute('y',mtb+220+50);
+	// tlgline4txt.setAttribute('font-size','20px');
+	// tlgline4txt.setAttribute('style', 'fill:'+gcolor+';');
+	// tlgline4txt.innerHTML = 'tl-4';
+	// tlgline4txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(tlgline4txt);
+
+
+
+	// var trg = doc.createElement('rect');
+	// trg.setAttribute('x',mlr+300);
+	// trg.setAttribute('y',mtb);
+	// trg.setAttribute('width',300);
+	// trg.setAttribute('height',300);
+	// trg.setAttribute('style', 'stroke:'+gcolor+';stroke-width:2.1;');
+	// trg.setAttribute('class', 'guidance');
+	// svgElem.appendChild(trg);
+	// var trgtxt = doc.createElement('text');
+	// trgtxt.setAttribute('x',mlr+300+135);
+	// trgtxt.setAttribute('y',mtb+165);
+	// trgtxt.setAttribute('font-size','50px');
+	// trgtxt.setAttribute('style', 'fill:'+gcolor+';');
+	// trgtxt.innerHTML = 'tr';
+	// trgtxt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(trgtxt);
+
+	// var trgline1 = doc.createElement('line');
+	// trgline1.setAttribute('x1',mlr+300);
+	// trgline1.setAttribute('y1',mtb+150);
+	// trgline1.setAttribute('x2',mlr+150+300);
+	// trgline1.setAttribute('y2',mtb);
+	// trgline1.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// trgline1.setAttribute('class', 'guidance');
+	// svgElem.appendChild(trgline1);
+	// var trgline1txt = doc.createElement('text');
+	// trgline1txt.setAttribute('x',mlr+30+300);
+	// trgline1txt.setAttribute('y',mtb+50);
+	// trgline1txt.setAttribute('font-size','20px');
+	// trgline1txt.setAttribute('style', 'fill:'+gcolor+';');
+	// trgline1txt.innerHTML = 'tr-1';
+	// trgline1txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(trgline1txt);
+	// var trgline2 = doc.createElement('line');
+	// trgline2.setAttribute('x1',mlr+150+300);
+	// trgline2.setAttribute('y1',mtb);
+	// trgline2.setAttribute('x2',mlr+300+300);
+	// trgline2.setAttribute('y2',mtb+150);
+	// trgline2.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// trgline2.setAttribute('class', 'guidance');
+	// svgElem.appendChild(trgline2);
+	// var trgline2txt = doc.createElement('text');
+	// trgline2txt.setAttribute('x',mlr+210+30+300);
+	// trgline2txt.setAttribute('y',mtb+50);
+	// trgline2txt.setAttribute('font-size','20px');
+	// trgline2txt.setAttribute('style', 'fill:'+gcolor+';');
+	// trgline2txt.innerHTML = 'tr-2';
+	// trgline2txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(trgline2txt);
+	// var trgline3 = doc.createElement('line');
+	// trgline3.setAttribute('x1',mlr+300);
+	// trgline3.setAttribute('y1',mtb+150);
+	// trgline3.setAttribute('x2',mlr+150+300);
+	// trgline3.setAttribute('y2',mtb+300);
+	// trgline3.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// trgline3.setAttribute('class', 'guidance');
+	// svgElem.appendChild(trgline3);
+	// var trgline3txt = doc.createElement('text');
+	// trgline3txt.setAttribute('x',mlr+30+300);
+	// trgline3txt.setAttribute('y',mtb+220+50);
+	// trgline3txt.setAttribute('font-size','20px');
+	// trgline3txt.setAttribute('style', 'fill:'+gcolor+';');
+	// trgline3txt.innerHTML = 'tr-3';
+	// trgline3txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(trgline3txt);/
+	// var trgline4 = doc.createElement('line');
+	// trgline4.setAttribute('x1',mlr+300+300);
+	// trgline4.setAttribute('y1',mtb+150);
+	// trgline4.setAttribute('x2',mlr+150+300);
+	// trgline4.setAttribute('y2',mtb+300);
+	// trgline4.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// trgline4.setAttribute('class', 'guidance');
+	// svgElem.appendChild(trgline4);
+	// var trgline4txt = doc.createElement('text');
+	// trgline4txt.setAttribute('x',mlr+210+30+300);
+	// trgline4txt.setAttribute('y',mtb+220+50);
+	// trgline4txt.setAttribute('font-size','20px');
+	// trgline4txt.setAttribute('style', 'fill:'+gcolor+';');
+	// trgline4txt.innerHTML = 'tr-4';
+	// trgline4txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(trgline4txt);
+
+
+
+	// var blg = doc.createElement('rect');
+	// blg.setAttribute('x',mlr);
+	// blg.setAttribute('y',mtb+300);
+	// blg.setAttribute('width',300);
+	// blg.setAttribute('height',300);
+	// blg.setAttribute('style', 'stroke:'+gcolor+';stroke-width:2.1;');
+	// blg.setAttribute('class', 'guidance');
+	// svgElem.appendChild(blg);
+	// var blgtxt = doc.createElement('text');
+	// blgtxt.setAttribute('x',mlr+135);
+	// blgtxt.setAttribute('y',mtb+300+165);
+	// blgtxt.setAttribute('font-size','50px');
+	// blgtxt.setAttribute('style', 'fill:'+gcolor+';');
+	// blgtxt.innerHTML = 'bl';
+	// blgtxt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(blgtxt);
+
+	// var blgline1 = doc.createElement('line');
+	// blgline1.setAttribute('x1',mlr);
+	// blgline1.setAttribute('y1',mtb+150+300);
+	// blgline1.setAttribute('x2',mlr+150);
+	// blgline1.setAttribute('y2',mtb+300);
+	// blgline1.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// blgline1.setAttribute('class', 'guidance');
+	// svgElem.appendChild(blgline1);
+	// var blgline1txt = doc.createElement('text');
+	// blgline1txt.setAttribute('x',mlr+30);
+	// blgline1txt.setAttribute('y',mtb+50+300);
+	// blgline1txt.setAttribute('font-size','20px');
+	// blgline1txt.setAttribute('style', 'fill:'+gcolor+';');
+	// blgline1txt.innerHTML = 'bl-1';
+	// blgline1txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(blgline1txt);
+	// var blgline2 = doc.createElement('line');
+	// blgline2.setAttribute('x1',mlr+150);
+	// blgline2.setAttribute('y1',mtb+300);
+	// blgline2.setAttribute('x2',mlr+300);
+	// blgline2.setAttribute('y2',mtb+150+300);
+	// blgline2.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// blgline2.setAttribute('class', 'guidance');
+	// svgElem.appendChild(blgline2);
+	// var blgline2txt = doc.createElement('text');
+	// blgline2txt.setAttribute('x',mlr+210+30);
+	// blgline2txt.setAttribute('y',mtb+50+300);
+	// blgline2txt.setAttribute('font-size','20px');
+	// blgline2txt.setAttribute('style', 'fill:'+gcolor+';');
+	// blgline2txt.innerHTML = 'bl-2';
+	// blgline2txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(blgline2txt);
+	// var blgline3 = doc.createElement('line');
+	// blgline3.setAttribute('x1',mlr);
+	// blgline3.setAttribute('y1',mtb+150+300);
+	// blgline3.setAttribute('x2',mlr+150);
+	// blgline3.setAttribute('y2',mtb+300+300);
+	// blgline3.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// blgline3.setAttribute('class', 'guidance');
+	// svgElem.appendChild(blgline3);
+	// var blgline3txt = doc.createElement('text');
+	// blgline3txt.setAttribute('x',mlr+30);
+	// blgline3txt.setAttribute('y',mtb+220+50+300);
+	// blgline3txt.setAttribute('font-size','20px');
+	// blgline3txt.setAttribute('style', 'fill:'+gcolor+';');
+	// blgline3txt.innerHTML = 'bl-3';
+	// blgline3txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(blgline3txt);
+	// var blgline4 = doc.createElement('line');
+	// blgline4.setAttribute('x1',mlr+300);
+	// blgline4.setAttribute('y1',mtb+150+300);
+	// blgline4.setAttribute('x2',mlr+150);
+	// blgline4.setAttribute('y2',mtb+300+300);
+	// blgline4.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// blgline4.setAttribute('class', 'guidance');
+	// svgElem.appendChild(blgline4);
+	// var blgline4txt = doc.createElement('text');
+	// blgline4txt.setAttribute('x',mlr+210+30);
+	// blgline4txt.setAttribute('y',mtb+220+50+300);
+	// blgline4txt.setAttribute('font-size','20px');
+	// blgline4txt.setAttribute('style', 'fill:'+gcolor+';');
+	// blgline4txt.innerHTML = 'bl-4';
+	// blgline4txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(blgline4txt);
+
+
+
+	// var brg = doc.createElement('rect');
+	// brg.setAttribute('x',mlr+300);
+	// brg.setAttribute('y',mtb+300);
+	// brg.setAttribute('width',300);
+	// brg.setAttribute('height',300);
+	// brg.setAttribute('style', 'stroke:'+gcolor+';stroke-width:2.1;');
+	// brg.setAttribute('class', 'guidance');
+	// svgElem.appendChild(brg);
+	// var brgtxt = doc.createElement('text');
+	// brgtxt.setAttribute('x',mlr+300+135);
+	// brgtxt.setAttribute('y',mtb+300+165);
+	// brgtxt.setAttribute('font-size','50px');
+	// brgtxt.setAttribute('style', 'fill:'+gcolor+';');
+	// brgtxt.innerHTML = 'br';
+	// brgtxt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(brgtxt);
+
+	// var brgline1 = doc.createElement('line');
+	// brgline1.setAttribute('x1',mlr+300);
+	// brgline1.setAttribute('y1',mtb+150+300);
+	// brgline1.setAttribute('x2',mlr+150+300);
+	// brgline1.setAttribute('y2',mtb+300);
+	// brgline1.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// brgline1.setAttribute('class', 'guidance');
+	// svgElem.appendChild(brgline1);
+	// var brgline1txt = doc.createElement('text');
+	// brgline1txt.setAttribute('x',mlr+30+300);
+	// brgline1txt.setAttribute('y',mtb+50+300);
+	// brgline1txt.setAttribute('font-size','20px');
+	// brgline1txt.setAttribute('style', 'fill:'+gcolor+';');
+	// brgline1txt.innerHTML = 'br-1';
+	// brgline1txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(brgline1txt);
+	// var brgline2 = doc.createElement('line');
+	// brgline2.setAttribute('x1',mlr+150+300);
+	// brgline2.setAttribute('y1',mtb+300);
+	// brgline2.setAttribute('x2',mlr+300+300);
+	// brgline2.setAttribute('y2',mtb+150+300);
+	// brgline2.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// brgline2.setAttribute('class', 'guidance');
+	// svgElem.appendChild(brgline2);
+	// var brgline2txt = doc.createElement('text');
+	// brgline2txt.setAttribute('x',mlr+210+30+300);
+	// brgline2txt.setAttribute('y',mtb+50+300);
+	// brgline2txt.setAttribute('font-size','20px');
+	// brgline2txt.setAttribute('style', 'fill:'+gcolor+';');
+	// brgline2txt.innerHTML = 'br-2';
+	// brgline2txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(brgline2txt);
+	// var brgline3 = doc.createElement('line');
+	// brgline3.setAttribute('x1',mlr+300);
+	// brgline3.setAttribute('y1',mtb+150+300);
+	// brgline3.setAttribute('x2',mlr+150+300);
+	// brgline3.setAttribute('y2',mtb+300+300);
+	// brgline3.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// brgline3.setAttribute('class', 'guidance');
+	// svgElem.appendChild(brgline3);
+	// var brgline3txt = doc.createElement('text');
+	// brgline3txt.setAttribute('x',mlr+30+300);
+	// brgline3txt.setAttribute('y',mtb+220+50+300);
+	// brgline3txt.setAttribute('font-size','20px');
+	// brgline3txt.setAttribute('style', 'fill:'+gcolor+';');
+	// brgline3txt.innerHTML = 'br-3';
+	// brgline3txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(brgline3txt);
+	// var brgline4 = doc.createElement('line');
+	// brgline4.setAttribute('x1',mlr+300+300);
+	// brgline4.setAttribute('y1',mtb+150+300);
+	// brgline4.setAttribute('x2',mlr+150+300);
+	// brgline4.setAttribute('y2',mtb+300+300);
+	// brgline4.setAttribute('style', 'stroke:'+gcolor+';stroke-width:1;');
+	// brgline4.setAttribute('class', 'guidance');
+	// svgElem.appendChild(brgline4);
+	// var brgline4txt = doc.createElement('text');
+	// brgline4txt.setAttribute('x',mlr+210+30+300);
+	// brgline4txt.setAttribute('y',mtb+220+50+300);
+	// brgline4txt.setAttribute('font-size','20px');
+	// brgline4txt.setAttribute('style', 'fill:'+gcolor+';');
+	// brgline4txt.innerHTML = 'br-4';
+	// brgline4txt.setAttribute('class', 'guidance');
+	// // svgElem.appendChild(brgline4txt);
+
+
+
+//******************************************** d end of guidance *******************************************
+
+
+
+
+	for (var i=0; i<=300; i+=10){
+		var bw = ['#ffffff','#ffffff','#000000','#000000']
+		var g = doc.createElement('g');
+		// g.setAttribute('style','stroke:'+bw[Math.floor(Math.random()*2)]);
+		g.setAttribute('style','stroke:'+bw[Math.floor(Math.random()*bw.length)]+';'+'stroke-width:'+Math.floor(Math.random()*lineweight)+';');
+		// g.setAttribute('stroke-dasharray',''+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes)+','+Math.floor(Math.random()*dashes));
+		// g.setAttribute('stroke-linecap','round')
+		svgElem.appendChild(g);
+
+		var tl1 = doc.createElement('line');
+		tl1.setAttribute('class','tl1');
+		tl1.setAttribute('x1',mlr+i);
+		tl1.setAttribute('y1',mtb);
+		tl1.setAttribute('x2',mlr);
+		tl1.setAttribute('y2',mtb+300-i);
+		var tl2 = doc.createElement('line');
+		tl2.setAttribute('x1',mlr+i);
+		tl2.setAttribute('y1',mtb);
+		tl2.setAttribute('x2',mlr+300);
+		tl2.setAttribute('y2',mtb+i);
+		var tl3 = doc.createElement('line');
+		tl3.setAttribute('x1',mlr+i);
+		tl3.setAttribute('y1',mtb+300);
+		tl3.setAttribute('x2',mlr);
+		tl3.setAttribute('y2',mtb+i);
+		var tl4 = doc.createElement('line');
+		tl4.setAttribute('x1',mlr+i);
+		tl4.setAttribute('y1',mtb+300);
+		tl4.setAttribute('x2',mlr+300);
+		tl4.setAttribute('y2',mtb+300-i);
+
+		var tr1 = doc.createElement('line');
+		tr1.setAttribute('x1',mlr+300+i);
+		tr1.setAttribute('y1',mtb);
+		tr1.setAttribute('x2',mlr+300);
+		tr1.setAttribute('y2',mtb+300-i);
+		var tr2 = doc.createElement('line');
+		tr2.setAttribute('x1',mlr+600-i);
+		tr2.setAttribute('y1',mtb);
+		tr2.setAttribute('x2',mlr+600);
+		tr2.setAttribute('y2',mtb+300-i);
+
+		var tr3 = doc.createElement('line');
+		tr3.setAttribute('x1',mlr+300);
+		tr3.setAttribute('y1',mtb+i);
+		tr3.setAttribute('x2',mlr+300+i);
+		tr3.setAttribute('y2',mtb+300);
+		var tr4 = doc.createElement('line');
+		tr4.setAttribute('x1',mlr+600-i);
+		tr4.setAttribute('y1',mtb+300);
+		tr4.setAttribute('x2',mlr+600);
+		tr4.setAttribute('y2',mtb+i);
+
+		var bl1 = doc.createElement('line');
+		bl1.setAttribute('x1',mlr+i);
+		bl1.setAttribute('y1',mtb+300);
+		bl1.setAttribute('x2',mlr);
+		bl1.setAttribute('y2',mtb+600-i);
+		var bl2 = doc.createElement('line');
+		bl2.setAttribute('x1',mlr+i);
+		bl2.setAttribute('y1',mtb+300);
+		bl2.setAttribute('x2',mlr+300);
+		bl2.setAttribute('y2',mtb+300+i);
+		var bl3 = doc.createElement('line');
+		bl3.setAttribute('x1',mlr);
+		bl3.setAttribute('y1',mtb+300+i);
+		bl3.setAttribute('x2',mlr+i);
+		bl3.setAttribute('y2',mtb+600);
+		var bl4 = doc.createElement('line');
+		bl4.setAttribute('x1',mlr+i);
+		bl4.setAttribute('y1',mtb+600);
+		bl4.setAttribute('x2',mlr+300);
+		bl4.setAttribute('y2',mtb+600-i);
+		
+		var br1 = doc.createElement('line');
+		br1.setAttribute('x1',mlr+300+i);
+		br1.setAttribute('y1',mtb+300);
+		br1.setAttribute('x2',mlr+300);
+		br1.setAttribute('y2',mtb+600-i);
+		var br2 = doc.createElement('line');
+		br2.setAttribute('x1',mlr+600-i);
+		br2.setAttribute('y1',mtb+300);
+		br2.setAttribute('x2',mlr+600);
+		br2.setAttribute('y2',mtb+600-i);
+		var br3 = doc.createElement('line');
+		br3.setAttribute('x1',mlr+300);
+		br3.setAttribute('y1',mtb+300+i);
+		br3.setAttribute('x2',mlr+300+i);
+		br3.setAttribute('y2',mtb+600);		
+		var br4 = doc.createElement('line');
+		br4.setAttribute('x1',mlr+300+i);
+		br4.setAttribute('y1',mtb+600);
+		br4.setAttribute('x2',mlr+600);
+		br4.setAttribute('y2',mtb+600-i);
+
+		g.appendChild(tl1);
+		// g.appendChild(tl2);
+		g.appendChild(tl3);
+		// g.appendChild(tl4); 
+
+		// g.appendChild(tr1);
+		g.appendChild(tr2);
+		// g.appendChild(tr3);
+		g.appendChild(tr4);
+		
+		g.appendChild(bl1);
+		// g.appendChild(bl2);
+		// g.appendChild(bl3);
+		// g.appendChild(bl4);
+		
+		// g.appendChild(br1);
+		g.appendChild(br2); 
+		// g.appendChild(br3);
+		// g.appendChild(br4);
+	}
+	
+
+	svgElem.appendChild(g);
+	doc.appendChild(svgElem);
+ 	later();
+} 
+
+var lines;
+function grow(e) {
+	xpos = e.clientX/10;
+	ypos = e.clientY/10;
+	lines = document.getElementsByTagName('line');
+	vari = xpos/window.innerWidth;
+
+	for(var i=0; i<=lines.length; i+=1){
+				var bw2 = ['#ffffff','#ffffff','#000000','#000000'];
+				var lineweightV = 10;
+
+
+		// var r = Math.floor(Math.random()*255);
+		lines[i].setAttribute('style','stroke:'+bw2[Math.floor(Math.random()*bw2.length)]+';'+'stroke-width:'+Math.floor(Math.random()*lineweightV)+';');
+		// lines[i].setAttribute('style','stroke: linear-gradient(to left, #000000, #ff0000) ;stroke-width:20;');
+		lines[i].setAttribute('stroke-dasharray',''+ypos+','+ypos+','+ypos+','+ypos*8+','+ypos*10);
+	}
+}
+// }
+
+function xmlWriter(){
+	var heading = '<?xml version="1.0" encoding="UTF-8"?>'
+	var s = new XMLSerializer();
+	var str = heading + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+};
+</script>
+</html>

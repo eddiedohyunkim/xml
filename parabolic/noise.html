@@ -1,0 +1,203 @@
+<html>
+<style>html,body{margin:10px; background-color: #000000;}</style>
+<body onmousemove="grow(event)"></body>
+<script type='text/javascript' src='js/xml-formatter.js'></script>
+<script>
+var width = 1960;
+var height = 1620;
+var formattedXml;
+var xpos,ypos;
+var a = true;
+var doc = document.implementation.createDocument(', ', null);
+create(function(){xmlWriter();});
+function create(later) {
+	var svgElem = doc.createElement('svg');
+	svgElem.setAttribute('xmlns','http://www.w3.org/2000/svg');
+	svgElem.setAttribute('version','1.0');
+	svgElem.setAttribute('width',width);
+	svgElem.setAttribute('height',height);
+
+	var background = doc.createElement('rect');
+	background.setAttribute('width',width);
+	background.setAttribute('height',height);
+	background.setAttribute('style','fill:#000000');
+	svgElem.appendChild(background);
+	var gap = 80;
+	var weight = 1;
+	var m = 100;
+	var g1 = doc.createElement('g');
+	g1.setAttribute('style','stroke:#ffffff;stroke-width:'+weight+'; ');
+	// g1.setAttribute('stroke-linecap','round')
+	// g1.setAttribute('stroke-dasharray','20,10,20,10,20,10')
+	for (var i=0; i<=300; i+=5){
+
+
+		var n1 = doc.createElement('line');
+		n1.setAttribute('x1',m+i);
+		n1.setAttribute('y1',m+i*2);
+		n1.setAttribute('x2',m);
+		n1.setAttribute('y2',m+(300-i)*2);
+		g1.appendChild(n1);
+		var n2 = doc.createElement('line');
+		n2.setAttribute('x1',m+300);
+		n2.setAttribute('y1',m+i*2);
+		n2.setAttribute('x2',m+300-i);
+		n2.setAttribute('y2',m+600-i*2);
+		g1.appendChild(n2);
+	
+
+		var o1 = doc.createElement('line');
+		o1.setAttribute('x1',m+300+gap);
+		o1.setAttribute('y1',m+i*2);
+		o1.setAttribute('x2',m+300+i+gap);
+		o1.setAttribute('y2',m+600);
+		// g1.appendChild(o1);
+		var o2 = doc.createElement('line');
+		o2.setAttribute('x1',m+300+i+gap);
+		o2.setAttribute('y1',m+600);
+		o2.setAttribute('x2',m+600+gap);
+		o2.setAttribute('y2',m+600-i*2);
+		g1.appendChild(o2);
+		var o1 = doc.createElement('line');
+		o1.setAttribute('x1',m+300+i+gap);
+		o1.setAttribute('y1',m);
+		o1.setAttribute('x2',m+300+gap);
+		o1.setAttribute('y2',m+600-i*2);
+		g1.appendChild(o1);
+	
+
+		var i1 = doc.createElement('line');
+		i1.setAttribute('x1',m+600+i/2+gap*2);
+		i1.setAttribute('y1',m+0);
+		i1.setAttribute('x2',m+750+gap*2);
+		i1.setAttribute('y2',m+i);
+		g1.appendChild(i1);
+		var i2 = doc.createElement('line');
+		i2.setAttribute('x1',m+750+i/2+gap*2);
+		i2.setAttribute('y1',m+0);
+		i2.setAttribute('x2',m+750+gap*2);
+		i2.setAttribute('y2',m+300-i);
+		g1.appendChild(i2);
+		var i3 = doc.createElement('line');
+		i3.setAttribute('x1',m+600+i/2+gap*2);
+		i3.setAttribute('y1',m+600);
+		i3.setAttribute('x2',m+750+gap*2);
+		i3.setAttribute('y2',m+600-i);
+		g1.appendChild(i3);
+		var i4 = doc.createElement('line');
+		i4.setAttribute('x1',m+750+i/2+gap*2);
+		i4.setAttribute('y1',m+600);
+		i4.setAttribute('x2',m+750+gap*2);
+		i4.setAttribute('y2',m+300+i);
+		g1.appendChild(i4);
+
+
+		var s1 = doc.createElement('line');
+		s1.setAttribute('x1',m+900+i+gap*3);
+		s1.setAttribute('y1',m+0);
+		s1.setAttribute('x2',m+900+gap*3);
+		s1.setAttribute('y2',m+600/2-i);
+		g1.appendChild(s1);
+		var s2 = doc.createElement('line');
+		s2.setAttribute('x1',m+900+gap*3);
+		s2.setAttribute('y1',m+i);
+		s2.setAttribute('x2',m+900+i+gap*3);
+		s2.setAttribute('y2',m+300);
+		g1.appendChild(s2); 
+		var s3 = doc.createElement('line');
+		s3.setAttribute('x1',m+900+i+gap*3);
+		s3.setAttribute('y1',m+300);
+		s3.setAttribute('x2',m+1200+gap*3);
+		s3.setAttribute('y2',m+300+i);
+		g1.appendChild(s3); 
+		var s4 = doc.createElement('line');
+		s4.setAttribute('x1',m+1200+gap*3);
+		s4.setAttribute('y1',m+300+i);
+		s4.setAttribute('x2',m+1200-i+gap*3);
+		s4.setAttribute('y2',m+600);
+		g1.appendChild(s4);
+
+
+		var e1 = doc.createElement('line');
+		e1.setAttribute('x1',m+1200+i+gap*4);
+		e1.setAttribute('y1',m+0);
+		e1.setAttribute('x2',m+1200+gap*4);
+		e1.setAttribute('y2',m+600/2-i);
+		g1.appendChild(e1);
+		var e2 = doc.createElement('line');
+		e2.setAttribute('x1',m+1200+gap*4);
+		e2.setAttribute('y1',m+i);
+		e2.setAttribute('x2',m+1200+i+gap*4);
+		e2.setAttribute('y2',m+300);
+		g1.appendChild(e2); 
+		var e3 = doc.createElement('line');
+		e3.setAttribute('x1',m+1200+i+gap*4);
+		e3.setAttribute('y1',m+300);
+		e3.setAttribute('x2',m+1200+gap*4);
+		e3.setAttribute('y2',m+600-i);
+		g1.appendChild(e3);
+		var e4 = doc.createElement('line');
+		e4.setAttribute('x1',m+1200+gap*4);
+		e4.setAttribute('y1',m+300+i);
+		e4.setAttribute('x2',m+1200+i+gap*4);
+		e4.setAttribute('y2',m+600);
+		g1.appendChild(e4); 
+		
+
+
+	}
+	svgElem.appendChild(g1);
+	doc.appendChild(svgElem);
+ 	later();
+} 
+
+var lines;
+function grow(e) {
+	xpos = e.clientX;
+	ypos = e.clientY;
+	lines = document.getElementsByTagName('line');
+	vari = xpos/window.innerWidth;
+
+	for(var i=0; i<=lines.length; i+=1){
+		var r = Math.floor(Math.random()*255);
+		lines[i].setAttribute('style','stroke:#ffffff;stroke-width:'+Math.floor(Math.random()*100)+';');
+		lines[i].setAttribute('stroke-dasharray',''+Math.floor(Math.random()*3)+','+xpos/Math.floor(Math.random()*60)+','+Math.floor(Math.random()*3)+','+ypos/Math.floor(Math.random()*60)+','+Math.floor(Math.random()*3)+','+ypos/Math.floor(Math.random()*60));
+	}
+}
+
+// document.body.onclick = function() {
+// 	if(a == true){
+//  		a = false;
+//  		document.documentElement.style.backgroundColor = '#00ff00';
+// 		document.body.style.backgroundColor = '#00ff00';
+// 		document.getElementById('info').style.color = '#000000';
+// 		for(var i=3; i<=lines.length; i+=1){
+// 			lines[i].setAttribute('style','stroke:#ffffff;stroke-width:;');
+// 		}
+//  	}else{
+// 		a =true;
+// 		document.documentElement.style.backgroundColor = '#000000';
+// 		document.body.style.backgroundColor = '#000000';
+// 		document.getElementById('info').style.color = '#ffffff';
+// 		for(var i=3; i<=lines.length; i+=1){
+// 			lines[i].setAttribute('style','fill:rgb(255,255,255); stroke:black; stroke-width:0.2;');
+// 		}
+// 	}
+// }
+
+function xmlWriter(){
+	var heading = '<?xml version="1.0" encoding="UTF-8"?>'
+	var s = new XMLSerializer();
+	var str = heading + s.serializeToString(doc);
+	var format = require('xml-formatter');
+	formattedXml = format(str);
+	console.log(formattedXml);
+	print();
+}
+
+function print (){
+	var display = document.querySelector('body');
+	display.innerHTML = formattedXml;
+};
+</script>
+</html>
