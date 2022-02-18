@@ -22,25 +22,34 @@ function create(later) {
   	halfH = (height/2);
 
   	var radius;
+    
   	width<height ? radius = width/2 : radius = height/2;
+    var yang2R = radius/2;
+    var yin2R = radius-yang2R;
 
-  	var yin = doc.createElement('circle');
-  	yin.setAttribute('id', 'yin')
-  	yin.setAttribute('cx',halfW);
-  	yin.setAttribute('cy',halfH);
-  	yin.setAttribute('r', radius);
-  	yin.setAttribute('stroke-width', 2);
-  	yin.setAttribute('stroke', '#000000');
-  	yin.setAttribute('fill', '#000000');
-  	svgElem.appendChild(yin);
+    function construct(element, id, r, cx, cy1, cy2, fill, sw=0, stroke){
+      var make = doc.createElement(element);
+      make.setAttribute('id', id);
+      make.setAttribute('r', r);
+      make.setAttribute('cx',cx);
+      width<height ? make.setAttribute('cy',cy1) : make.setAttribute('cy',cy2);
+      make.setAttribute('fill', fill);
+      make.setAttribute('stroke-width', sw);
+      make.setAttribute('stroke', stroke);
+      svgElem.appendChild(make);
+    }
 
-  	var yang = doc.createElement('path');
-  	width<height ? yang.setAttribute('d', 'M'+halfW+','+((height/2)-radius)+' a1,1 0 0,0 0,'+width) : yang.setAttribute('d', 'M'+halfW+',0 a1,1 0 0,0 0,'+height);
-  	yang.setAttribute('fill', '#ffffff');
-  	svgElem.appendChild(yang);
+    construct('circle', 'yin', radius, halfW, halfH, halfH, '#000000', 2, '#000000');
+
+    var yang = doc.createElement('path');
+    width<height ? yang.setAttribute('d', 'M'+halfW+','+((height/2)-radius)+' a1,1 0 0,0 0,'+width) : yang.setAttribute('d', 'M'+halfW+',0 a1,1 0 0,0 0,'+height);
+    yang.setAttribute('fill', '#ffffff');
+    svgElem.appendChild(yang);
+
+  	construct('circle', 'yang2', yang2R, halfW, (halfH-yang2R), halfH/2, '#ffffff');
+    construct('circle', 'yin2', yin2R, halfW, (height/2+yin2R), height-yin2R, '#000000');
 	
 	doc.appendChild(svgElem);
-	console.log(yang);
  	later();
 } 
 
@@ -65,12 +74,20 @@ function print (){
 		// should be put it in one function 
     var halfW = (window.innerWidth/2);
   	var halfH = (window.innerHeight/2);
-  	document.getElementById('yin').setAttribute('style', 'cx:'+halfW+'; cy:'+halfH+';')
-  		
   	var radius;
+    
   	window.innerWidth<window.innerHeight ? radius = window.innerWidth/2 : radius = window.innerHeight/2;
+    var newRadius = radius/2;
   	document.getElementById('yin').setAttribute('r', radius);
+    document.getElementById('yin2').setAttribute('r', newRadius);
+    document.getElementById('yang2').setAttribute('r', newRadius);
   	window.innerWidth<window.innerHeight ? document.querySelector('path').setAttribute('d', 'M'+halfW+','+((window.innerHeight/2)-radius)+' a1,1 0 0,0 0,'+window.innerWidth) : document.querySelector('path').setAttribute('d', 'M'+halfW+',0 a1,1 0 0,0 0,'+window.innerHeight);
+
+    document.getElementById('yin').setAttribute('style', 'cx:'+halfW+'; cy:'+halfH+';');
+    document.getElementById('yang2').setAttribute('style', 'cx:'+halfW+'; cy:'+halfH/2+';');
+    window.innerWidth<window.innerHeight ? document.getElementById('yang2').setAttribute('style', 'cx:'+halfW+'; cy:'+(halfH-newRadius)+';') : document.getElementById('yang2').setAttribute('style', 'cx:'+halfW+'; cy:'+halfH/2+';');
+    window.innerWidth<window.innerHeight ? document.getElementById('yin2').setAttribute('style', 'cx:'+halfW+'; cy:'+(window.innerHeight/2+newRadius)+';') : document.getElementById('yin2').setAttribute('style', 'cx:'+halfW+'; cy:'+(window.innerHeight-newRadius)+';');
+    
     // should be put it in one function 
 	}
 };
