@@ -65,7 +65,7 @@ function print (){
   		document.getElementById('yin').setAttribute('style', 'cx:'+halfW+'; cy:'+halfH+';')
   		
   		var radius;
-  		window.innerWidth<window.innerHeight ? radius = window.innerWidth/2 : radius = window.innerHeight/2;
+  		window.innerWidth<window.innerHeight ? radius = halfW : radius = halfH;
   		document.querySelector('circle').style.r = radius;
   		window.innerWidth<window.innerHeight ? document.querySelector('path').setAttribute('d', 'M'+halfW+','+((window.innerHeight/2)-radius)+' a1,1 0 0,0 0,'+window.innerWidth) : document.querySelector('path').setAttribute('d', 'M'+halfW+',0 a1,1 0 0,0 0,'+window.innerHeight);
 	}
