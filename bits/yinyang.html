@@ -1,7 +1,7 @@
 <html>
 <style>
-	html,body{width:100% height:100vh; margin:0px; padding:0px;}
-  svg{width:100% height:100vh;}
+	html,body{width:100% height:100%; margin:0px; padding:0px;}
+  svg{width:100% height:100%;}
 </style>
 <body>
 <body>
@@ -59,7 +59,7 @@ function print (){
 	display.innerHTML = formattedXml;
 
 	document.querySelector('svg').setAttribute('style', 'width:100%; height:100%;');
-	window.onresize = redraw(); 
+	window.onresize = redraw; 
 
   function redraw(){
 		// should be put it in one function 
@@ -68,22 +68,22 @@ function print (){
   	document.getElementById('yin').setAttribute('style', 'cx:'+halfW+'; cy:'+halfH+';')
   		
   	var radius;
-  	window.innerWidth<window.innerHeight ? radius = halfW : radius = halfH;
+  	window.innerWidth<window.innerHeight ? radius = window.innerWidth/2 : radius = window.innerHeight/2;
   	document.querySelector('circle').style.r = radius;
   	window.innerWidth<window.innerHeight ? document.querySelector('path').setAttribute('d', 'M'+halfW+','+((window.innerHeight/2)-radius)+' a1,1 0 0,0 0,'+window.innerWidth) : document.querySelector('path').setAttribute('d', 'M'+halfW+',0 a1,1 0 0,0 0,'+window.innerHeight);
     // should be put it in one function 
 	}
-  function detectOrientation(){
-    if(typeof window.onorientationchange != 'undefined'){
-      if(window.orientation==0){ // portrait
-        redraw()
-      }else if(window.orientation==90 || window.orientation==-90){ // landscape
-        redraw()
-      } // fi
-    }
-  } 
-  detectOrientation();
-  window.onorientationchange = detectOrientation;
+  // function detectOrientation(){
+  //   if(typeof window.onorientationchange != 'undefined'){
+  //     if(window.orientation==0){ // portrait
+  //       redraw()
+  //     }else if(window.orientation==90 || window.orientation==-90){ // landscape
+  //       redraw()
+  //     } // fi
+  //   }
+  // } 
+  // detectOrientation();
+  // window.onorientationchange = detectOrientation;
 	
 };
 </script>
