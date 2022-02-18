@@ -69,7 +69,7 @@ function print (){
   		
   	var radius;
   	window.innerWidth<window.innerHeight ? radius = window.innerWidth/2 : radius = window.innerHeight/2;
-  	document.querySelector('circle').style.r = radius;
+  	document.getElementById('yin').setAttribute('r', radius);
   	window.innerWidth<window.innerHeight ? document.querySelector('path').setAttribute('d', 'M'+halfW+','+((window.innerHeight/2)-radius)+' a1,1 0 0,0 0,'+window.innerWidth) : document.querySelector('path').setAttribute('d', 'M'+halfW+',0 a1,1 0 0,0 0,'+window.innerHeight);
     // should be put it in one function 
 	}
